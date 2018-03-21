@@ -5,6 +5,7 @@
  * @author Mohammad Javad Naderi <mjnaderi@gmail.com>
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
+use Dapphp\Radius\Radius;
 
 class User_model extends CI_Model
 {
@@ -330,6 +331,15 @@ class User_model extends CI_Model
 			return FALSE;
 		if ($this->password_hash->CheckPassword($password, $query->row()->password))
 			return TRUE;
+			
+		$this->load->config('secrets');
+		if($this->config->item('shj_authenticate') == 'radius') {
+			$client = new Radius();
+			$client->setServer($this->config->item('shj_radius')['server']) // RADIUS server address
+				->setSecret($this->config->item('shj_radius')['secret']);
+			if($client->accessRequest($username, $password))
+				return TRUE;
+		}
 		return FALSE;
 	}
 
@@ -394,7 +404,7 @@ class User_model extends CI_Model
 			return FALSE;
 		$the_user = $query->row();
 		$username = $the_user->username;
-		
+
 		$display_name = $this->input->post('display_name');
 		$locked = $this->settings_model->get_setting(lock_student_display_name);
 		if ($locked == 1) {
@@ -449,7 +459,7 @@ class User_model extends CI_Model
 		// send the email:
 		$this->load->library('email');
 		$this->load->config('secrets');
-		
+
 		$config = array(
 			'mailtype'  => 'html',
 			'charset'   => 'iso-8859-1'
