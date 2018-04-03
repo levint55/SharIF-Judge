@@ -6,6 +6,13 @@
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+
 class Submissions extends CI_Controller
 {
 
@@ -56,10 +63,10 @@ class Submissions extends CI_Controller
 		$now = shj_now_str(); // current time
 
 		// Load PHPExcel library
-		$this->load->library('phpexcel');
+		$phpspreedsheet = new Spreadsheet();
 
 		// Set document properties
-		$this->phpexcel->getProperties()->setCreator('SharIF Judge')
+		$phpspreedsheet->getProperties()->setCreator('SharIF Judge')
 			->setLastModifiedBy('SharIF Judge')
 			->setTitle('SharIF Judge Users')
 			->setSubject('SharIF Judge Users')
@@ -69,8 +76,8 @@ class Submissions extends CI_Controller
 		$output_filename = 'judge_'.$view.'_submissions';
 
 		// Set active sheet
-		$this->phpexcel->setActiveSheetIndex(0);
-		$sheet = $this->phpexcel->getActiveSheet();
+		$phpspreedsheet->setActiveSheetIndex(0);
+		$sheet = $phpspreedsheet->getActiveSheet();
 
 		// Add current assignment, time, username filter, and problem filter to document
 		$sheet->fromArray(array('Assignment:',$this->user->selected_assignment['name']), null, 'A1', true);
@@ -97,7 +104,7 @@ class Submissions extends CI_Controller
 		$sheet->getStyle('A6:'.$highest_column.'6')->applyFromArray(
 			array(
 				'fill' => array(
-					'type' => PHPExcel_Style_Fill::FILL_SOLID,
+					'fillType' => Fill::FILL_SOLID,
 					'color' => array('rgb' => '173C45')
 				),
 				'font'  => array(
@@ -182,7 +189,7 @@ class Submissions extends CI_Controller
 			$sheet->getStyle('A'.$i.':'.$highest_column.$i)->applyFromArray(
 				array(
 					'fill' => array(
-						'type' => PHPExcel_Style_Fill::FILL_SOLID,
+						'fillType' => Fill::FILL_SOLID,
 						'color' => array('rgb' => (($i%2)?'F0F0F0':'FAFAFA'))
 					)
 				)
@@ -192,7 +199,7 @@ class Submissions extends CI_Controller
 		// Set text align to center
 		$sheet->getStyle( $sheet->calculateWorksheetDimension() )
 			->getAlignment()
-			->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+			->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
 		// Making columns autosize
 		for ($i=2;$i<count($header);$i++)
@@ -203,7 +210,7 @@ class Submissions extends CI_Controller
 			array(
 				'borders' => array(
 					'outline' => array(
-						'style' => PHPExcel_Style_Border::BORDER_THIN,
+						'borderStyle' => Border::BORDER_THIN,
 						'color' => array('rgb' => '444444'),
 					),
 				)
@@ -219,7 +226,7 @@ class Submissions extends CI_Controller
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 		header('Content-Disposition: attachment;filename="'.$output_filename.'.'.$ext.'"');
 		header('Cache-Control: max-age=0');
-		$objWriter = PHPExcel_IOFactory::createWriter($this->phpexcel, ($ext==='xlsx'?'Excel2007':'Excel5'));
+		$objWriter = IOFactory::createWriter($phpspreedsheet, ucfirst($ext));
 		$objWriter->save('php://output');
 	}
 
