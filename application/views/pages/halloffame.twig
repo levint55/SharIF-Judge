@@ -1,0 +1,46 @@
+{#
+ # SharIF Judge
+ # file: halloffame.twig
+ # author: Stillmen Vallian <stillmen.v@gmail.com>
+ #}
+{% set selected = 'halloffame' %}
+{% extends 'templates/base.twig' %}
+{% block icon %}fa fa-list-alt fa-lg{% endblock %}
+{% block title %}Hall of Fame{% endblock %}
+{% block head_title %}Hall of Fame{% endblock %}
+
+
+
+{% block main_content %}
+<div style="height:15px"></div>
+<table class="sharif_table">
+	<thead>
+		<tr>
+			<th>#</th>
+      <th>Rank</th>
+			<th>Username</th>
+			<th>Total Score</th>
+		</tr>
+	</thead>
+  {% set tempTotalScore = 0 %}
+  {% set tempLoop = 0 %}
+	{% for hof in hofs %}
+		<tr class="hof_details" style="cursor: pointer;">
+			<td>{{ loop.index }}</td>
+      {% if loop.index == 1 %}
+        <td>1</td>
+        {% set tempTotalScore = hof.totalscore %}
+        {% set tempLoop = tempLoop+1 %}
+      {% elseif tempTotalScore == hof.totalscore %}
+        <td>{{ tempLoop }}</td>
+      {% else %}
+        {% set tempTotalScore = hof.totalscore %}
+        {% set tempLoop = tempLoop+1 %}
+        <td>{{ tempLoop }}</td>
+      {% endif %}
+			<td class="username">{{ hof.username }}</td>
+      <td>{{ hof.totalscore }}</td>
+		</tr>
+	{% endfor %}
+</table>
+{% endblock %} {# main_content #}

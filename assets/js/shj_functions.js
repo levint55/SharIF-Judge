@@ -479,6 +479,75 @@ $(document).ready(function(){
 
 
 
+
+/**
+ * "Hall of Fame" page
+ */
+$(document).ready(function(){
+	$('.hof_details').click(function(){
+		var row = $(this).closest("tr");    // Find the row
+    var username = row.find(".username").text();
+		$.ajax({
+			type: 'POST',
+			url: shj.site_url+'halloffame/hof_details',
+			data: {
+				username: username,
+				shj_csrf_token: shj.csrf_token
+			},
+			beforeSend: shj.loading_start,
+			complete: shj.loading_finish,
+			error: shj.loading_error,
+
+			success: function(response){
+				var currentAssignment = '';
+				var prevAssignment = '';
+				var temp = '';
+
+				for (var i = 0; i < response.length; i++) {
+					if (response[i].scoreboard == 0) {
+						temp = temp + '--------------------------------------------------<br><b>' + response[i].assignment + '</b><br>Scoreboard Disabled!';
+					}
+					else{
+						if (i == 0) {
+							temp = temp + '<b>' + response[i].assignment + '</b> <br>' + response[i].problem + ' : ' + response[i].score +'<br>';
+							prevAssignment = response[i].assignment;
+						}
+						else{
+							currentAssignment = response[i].assignment;
+							var index = currentAssignment.localeCompare(prevAssignment); //comparing previous assignment's name with current assignment's name
+							if (index == 0) {
+								temp = temp + response[i].problem + ' : ' + response[i].score + '<br>';
+								prevAssignment = currentAssignment;
+							}
+							else{
+								temp = temp + '--------------------------------------------------<br><b>'+currentAssignment + '</b><br>' + response[i].problem + ' : ' + response[i].score + '<br>';
+								prevAssignment = currentAssignment;
+							}
+						}
+					}
+				}
+
+				noty({
+					text: 'Hall of Fame for username: <b>'+username+'</b><br>============================<br>'+temp,
+					layout: 'center',
+					type: 'confirm',
+					animation: {
+						open: {height: 'toggle'},
+						close: {height: 'toggle'},
+						easing: 'swing',
+						speed: 300
+					},
+					buttons: [
+						{addClass: 'btn shj-red', text: 'Close', onClick: function($noty){$noty.close();}}
+					]
+				});
+			}
+		});
+	});
+});
+
+
+
 /**
  * Set dir="auto" for all input elements
  */
