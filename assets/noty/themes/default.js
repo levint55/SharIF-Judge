@@ -50,8 +50,6 @@
 				textAlign: 'center',
 				padding: '8px 10px 9px',
 				width: 'auto',
-				height: '150px',
-    		overflow: 'scroll',
 				position: 'relative'
 			});
 
