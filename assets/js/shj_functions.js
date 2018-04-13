@@ -483,22 +483,20 @@ $(document).ready(function(){
 /**
  * "Hall of Fame" page
  */
+shj.modal_open = false;
 $(document).ready(function(){
-	$('.hof_details').click(function(){
+	$('.hof_details').click(function () {
 		var row = $(this).closest("tr");    // Find the row
     var username = row.find(".username").text();
-		$.ajax({
+		var view_code_request = $.ajax({
+			cache: true,
 			type: 'POST',
 			url: shj.site_url+'halloffame/hof_details',
 			data: {
 				username: username,
 				shj_csrf_token: shj.csrf_token
 			},
-			beforeSend: shj.loading_start,
-			complete: shj.loading_finish,
-			error: shj.loading_error,
-
-			success: function(response){
+			success: function (response) {
 				var currentAssignment = '';
 				var prevAssignment = '';
 				var temp = '';
@@ -526,23 +524,25 @@ $(document).ready(function(){
 						}
 					}
 				}
-
-				noty({
-					text: 'Hall of Fame for username: <b>'+username+'</b><br>============================<br>'+temp,
-					layout: 'center',
-					type: 'confirm',
-					animation: {
-						open: {height: 'toggle'},
-						close: {height: 'toggle'},
-						easing: 'swing',
-						speed: 300
-					},
-					buttons: [
-						{addClass: 'btn shj-red', text: 'Close', onClick: function($noty){$noty.close();}}
-					]
-				});
+				$('.modal_inside').html('<pre class="code-column">'+temp+'</pre>');
+				$('.modal_inside').prepend('<p><code> Hall of Fame Details | Username: '+username+'</code></p>');
 			}
 		});
+		if (!shj.modal_open) {
+			shj.modal_open = true;
+			$('#shj_modal').reveal(
+				{
+					animationspeed: 300,
+					on_close_modal: function () {
+						view_code_request.abort();
+					},
+					on_finish_modal: function () {
+						$(".modal_inside").html('<div style="text-align: center;">Loading<br><img src="'+shj.base_url+'assets/images/loading.gif"/></div>');
+						shj.modal_open = false;
+					}
+				}
+			);
+		}
 	});
 });
 
