@@ -28,7 +28,7 @@ $system_path = '/home/mohammad/secret/system';
 $application_folder = '/home/mohammad/secret/application';
 ```
 * 3. Create a MySql or PostgreSql database for SharIF Judge. Do not install any database connection package for C/C++, Java or Python.
-* 4. Set database connection settings in file `application/config/database.php`. You can use a prefix for your table names.
+* 4. Set database connection settings in file `application/config/database.example.php` and save it with name `database.php`. You can use a prefix for your table names.
 ```php
 /*  Enter database connection settings here:  */
 'dbdriver' => 'postgre',    // database driver (mysqli, postgre)
@@ -39,10 +39,11 @@ $application_folder = '/home/mohammad/secret/application';
 'dbprefix' => 'shj_',       // table prefix
 /**********************************************/
 ```
-* 5. Make `application/cache/Twig` writable by php.
-* 6. Open SharIF Judge's main page in a web browser and follow the installation process.
-* 7. Log in with your admin account.
-* 8.
+* 5. Set RADIUS server and mail server serttings in file `application/config/secrets.example.php` and save it with name `secrets.php`.
+* 6. Make `application/cache/Twig` writable by php.
+* 7. Open SharIF Judge's main page in a web browser and follow the installation process.
+* 8. Log in with your admin account.
+* 9.
     **[IMPORTANT]** Move folders `tester` and `assignments` somewhere outside your public directory. Then save their full path in `Settings` page. **These two folders must be writable by PHP.** Submitted files will be stored in `assignments` folder. So it should be somewhere not publicly accessible.
 
 Important: [Secure SharIF Judge](security.md)
