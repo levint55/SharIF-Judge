@@ -85,6 +85,12 @@ If you enable this feature, something like this will be displayed to students wh
     Runtime Error (java.lang.StackOverflowError)
     Test 10
     Runtime Error (java.lang.ArrayIndexOutOfBoundsException)
+    
+Archived Assignment
+---------------
+
+If you enable this feature, then the assignment will be created with Finish Time `2038-01-18 00:00:00` (UTC + 7) which means you have unlimited time to submit the assignment.
+
 
 Coefficient Rule
 ----------------
