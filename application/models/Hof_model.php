@@ -27,7 +27,7 @@ class Hof_model extends CI_Model
 	public function get_all_final_submission()
 	{
 		//include upload only file: remove " AND file_type!='txt' AND file_type!='pdf' AND file_type!='zip' ";
-    return $this->db->query("SELECT username, SUM(pre_score * coefficient / 100) AS totalscore FROM shj_submissions WHERE is_final=1 AND file_type!='txt' AND file_type!='pdf' AND file_type!='zip' GROUP BY username ORDER BY totalscore DESC")->result_array();
+    return $this->db->query("SELECT username, CEILING(SUM(pre_score * coefficient / 10000))  AS totalscore FROM shj_submissions WHERE is_final=1 AND file_type!='txt' AND file_type!='pdf' AND file_type!='zip' GROUP BY username ORDER BY totalscore DESC")->result_array();
 	}
 
 
@@ -42,7 +42,7 @@ class Hof_model extends CI_Model
 	public function get_all_user_assignments($username)
 	{
 		$this->load->model('assignment_model');
-		$details = $this->db->query("SELECT assignment, problem, (pre_score * coefficient / 100) AS score FROM shj_submissions WHERE is_final=1 AND username='$username' AND file_type!='txt' AND file_type!='pdf' AND file_type!='zip' ORDER BY assignment ASC")->result_array();
+		$details = $this->db->query("SELECT display_name, assignment, problem, CEILING((pre_score * coefficient / 10000)) AS score FROM shj_submissions INNER JOIN shj_users ON shj_submissions.username = shj_users.username WHERE is_final=1 AND shj_submissions.username='$username' AND file_type!='txt' AND file_type!='pdf' AND file_type!='zip' ORDER BY assignment ASC")->result_array();
 		foreach ($details as $key => $detail) {
 			$assignment_id = $detail['assignment'];
 			$problem_id = $detail['problem'];

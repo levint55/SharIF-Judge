@@ -500,10 +500,11 @@ $(document).ready(function(){
 				var currentAssignment = '';
 				var prevAssignment = '';
 				var temp = '';
+				var display_name = response[0].display_name;
 
 				for (var i = 0; i < response.length; i++) {
 					if (response[i].scoreboard == 0) {
-						temp = temp + '--------------------------------------------------<br><b>' + response[i].assignment + '</b><br>Scoreboard Disabled!';
+						temp = temp + '--------------------------------------------------<br><b>' + response[i].assignment + '</b><br>Scoreboard Disabled!<br>';
 					}
 					else{
 						if (i == 0) {
@@ -525,7 +526,7 @@ $(document).ready(function(){
 					}
 				}
 				$('.modal_inside').html('<pre class="code-column">'+temp+'</pre>');
-				$('.modal_inside').prepend('<p><code> Hall of Fame Details | Username: '+username+'</code></p>');
+				$('.modal_inside').prepend('<p><code> Hall of Fame Details | Username: '+username+' | Display Name: '+display_name+'</code></p>');
 			}
 		});
 		if (!shj.modal_open) {
