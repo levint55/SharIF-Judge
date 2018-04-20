@@ -26,6 +26,10 @@ Download the latest release from https://github.com/ftisunpar/Sharif-Judge/relea
   * Rejudge
   * Scoreboard
   * Notifications
+  * Lock Student's Display Name
+  * Archived Assignment
+  * Hall of Fame 
+  * 24-hour Logs
   * ...
 
 ## Requirements
