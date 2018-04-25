@@ -25,6 +25,7 @@
 			<th>#</th>
       <th>Rank</th>
 			<th>Username</th>
+      <th>Display Name</th>
 			<th>Total Score</th>
 		</tr>
 	</thead>
@@ -45,6 +46,7 @@
         <td>{{ tempLoop }}</td>
       {% endif %}
 			<td class="username">{{ hof.username }}</td>
+      <td class="display_name">{{ hof.display_name }}</td>
       <td>{{ hof.totalscore }}</td>
 		</tr>
 	{% endfor %}

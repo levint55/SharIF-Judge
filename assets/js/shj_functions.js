@@ -488,6 +488,7 @@ $(document).ready(function(){
 	$('.hof_details').click(function () {
 		var row = $(this).closest("tr");    // Find the row
     var username = row.find(".username").text();
+		var display_name = row.find(".display_name").text();
 		var view_code_request = $.ajax({
 			cache: true,
 			type: 'POST',
@@ -500,7 +501,6 @@ $(document).ready(function(){
 				var currentAssignment = '';
 				var prevAssignment = '';
 				var temp = '';
-				var display_name = response[0].display_name;
 
 				for (var i = 0; i < response.length; i++) {
 					if (response[i].scoreboard == 0) {
