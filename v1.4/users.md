@@ -1,9 +1,9 @@
 # Users
 
-In Sharif Judge, users are grouped into 4 groups: Admins, Head Instructors, Instructors, and Students.
+In SharIF Judge, users are grouped into 4 groups: Admins, Head Instructors, Instructors, and Students.
 
 ## User roles
-There are four user roles in Sharif Judge.
+There are four user roles in SharIF Judge.
 
 | User Role       | User Level |
 | --------------- | ---------- |
@@ -36,7 +36,7 @@ You can add multiple users by clicking on `Add Users` in `Users` page. You must 
 
 Lines starting with a `#` are comments. Each other line represents a user with following syntax:
 
-    USERNAME EMAIL PASSWORD ROLE
+    USERNAME,EMAIL,DISPLAY-NAME,PASSWORD,ROLE
 
     * Usernames may contain lowercase letters or numbers and must be between 3 and 20 characters in length.
     * Passwords must be between 6 and 30 characters in length.
@@ -47,13 +47,13 @@ An example:
 
     # This is a comment!
     # This is another comment!
-    instructor instructor@sharifjudge.ir 123456 head_instructor
-    instructor2 instructor2@sharifjudge.ir random[7] instructor
-    student1 st1@sharifjudge.ir random[6] student
-    student2 st2@sharifjudge.ir random[6] student
-    student3 st3@sharifjudge.ir random[6] student
-    student4 st4@sharifjudge.ir random[6] student
-    student5 st5@sharifjudge.ir random[6] student
-    student6 st6@sharifjudge.ir random[6] student
-    student7 st7@sharifjudge.ir random[6] student
+    instructor,instructor@sharifjudge.ir,Instructor One,123456,head_instructor
+    instructor2,instructor2@sharifjudge.ir,Instructor Two,random[7],instructor
+    student1,st1@sharifjudge.ir,Student One,random[6],student
+    student2,st2@sharifjudge.ir,Student Two,random[6],student
+    student3,st3@sharifjudge.ir,Student Three,random[6],student
+    student4,st4@sharifjudge.ir,Student Four,random[6],student
+    student5,st5@sharifjudge.ir,Student Five,random[6],student
+    student6,st6@sharifjudge.ir,Student Six,random[6],student
+    student7,st7@sharifjudge.ir,Student Seven,random[6],student
 

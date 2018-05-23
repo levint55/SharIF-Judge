@@ -4,7 +4,7 @@ Installation
 Requirements
 ------------
 
-For running Sharif Judge, a Linux server with following requirements is needed:
+For running SharIF Judge, a Linux server with following requirements is needed:
 
 * Webserver running PHP version 5.3 or later
 * PHP CLI (PHP command line interface, i.e. `php` shell command)
@@ -27,8 +27,8 @@ Installation
 $system_path = '/home/mohammad/secret/system';
 $application_folder = '/home/mohammad/secret/application';
 ```
-* 3. Create a MySql or PostgreSql database for Sharif Judge. Do not install any database connection package for C/C++, Java or Python.
-* 4. Set database connection settings in file `application/config/database.php`. You can use a prefix for your table names.
+* 3. Create a MySql or PostgreSql database for SharIF Judge. Do not install any database connection package for C/C++, Java or Python.
+* 4. Set database connection settings in file `application/config/database.example.php` and save it with name `database.php`. You can use a prefix for your table names.
 ```php
 /*  Enter database connection settings here:  */
 'dbdriver' => 'postgre',    // database driver (mysqli, postgre)
@@ -39,23 +39,24 @@ $application_folder = '/home/mohammad/secret/application';
 'dbprefix' => 'shj_',       // table prefix
 /**********************************************/
 ```
-* 5. Make `application/cache/Twig` writable by php.
-* 6. Open Sharif Judge's main page in a web browser and follow the installation process.
-* 7. Log in with your admin account.
-* 8.
+* 5. Set RADIUS server and mail server serttings in file `application/config/secrets.example.php` and save it with name `secrets.php`.
+* 6. Make `application/cache/Twig` writable by php.
+* 7. Open SharIF Judge's main page in a web browser and follow the installation process.
+* 8. Log in with your admin account.
+* 9.
     **[IMPORTANT]** Move folders `tester` and `assignments` somewhere outside your public directory. Then save their full path in `Settings` page. **These two folders must be writable by PHP.** Submitted files will be stored in `assignments` folder. So it should be somewhere not publicly accessible.
 
-Important: [Secure Sharif Judge](security.md)
+Important: [Secure SharIF Judge](security.md)
 
 After Installation
 ------------------
 
-Now that you have installed Sharif Judge, you may want to:
+Now that you have installed SharIF Judge, you may want to:
 
   * [Add Assignment](add_assignment.md)
   * Change settings (time zone, upload size limit, ...)
   * [Add Users](users.md#add_users)
-  * **[IMPORTANT]** [Secure Sharif Judge](security.md)
+  * **[IMPORTANT]** [Secure SharIF Judge](security.md)
   * **[IMPORTANT]** Enable [Sandbox](sandboxing.md)
   * Learn about [Shield](shield.md)
   * [Enable clean URLs](clean_urls.md)

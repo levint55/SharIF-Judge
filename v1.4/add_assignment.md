@@ -85,6 +85,12 @@ If you enable this feature, something like this will be displayed to students wh
     Runtime Error (java.lang.StackOverflowError)
     Test 10
     Runtime Error (java.lang.ArrayIndexOutOfBoundsException)
+    
+Archived Assignment
+---------------
+
+If you enable this feature, then the assignment will be created with Finish Time `2038-01-18 00:00:00` (UTC + 7) which means you have unlimited time to submit the assignment.
+
 
 Coefficient Rule
 ----------------
@@ -124,7 +130,7 @@ elseif ($delay > $extra_time)
 
 Problems
 
-![Problems](problems.png)
+![Problems](img/problems.png)
 
 Enter information about problems in this field. There are several items in this field.
 
@@ -153,16 +159,16 @@ Allowed Languages
 
 Set allowed languages for each problems in this field (comma separated).
 
-Available languages are: `C`, `C++`, `Java`, `Python 2`, `Python 3`, `Zip`, `PDF`
+Available languages are: `C`, `C++`, `Java`, `Python 2`, `Python 3`, `Zip`, `PDF`, `TXT`
 
-Note: You can use `Zip` or `PDF` only if you have enabled `Upload Only` option.
+Note: You can use `Zip`, `PDF` and `TXT` only if you have enabled `Upload Only` option.
 
 e.g. `C, C++   , Zip` or `Python 2,Python 3` or `Java ,C`
 
 Diff Command
 ------------
 
-The command used to compare output with correct output. By default Sharif Judge uses `diff`. But you can change this command here.
+The command used to compare output with correct output. By default SharIF Judge uses `diff`. But you can change this command here.
 
 This field should not contain any space.
 
@@ -173,12 +179,12 @@ You can set arguments of Diff command here. See `man diff` for a complete list o
 
 I have added two new options: `ignore` and `identical`.
 
-  * **`ignore`**: Sharif Judge ignores all newlines and whitespaces.
-  * **`identical`**: Sharif Judge doesn't ignore anything. Output of submitted file must be identical to the test case's output to be accepted.
+  * **`ignore`**: SharIF Judge ignores all newlines and whitespaces.
+  * **`identical`**: SharIF Judge doesn't ignore anything. Output of submitted file must be identical to the test case's output to be accepted.
 
 This field should not contain any space. You may consider using `-b`, `-bB`, `-iw` or `ignore`.
 
 Upload Only
 -----------
 
-If you set a problem as Upload-Only, Sharif Judge will not judge submissions of that problem. You can use `Zip` and `PDF` in allowed languages if you have enabled this option.
+If you set a problem as Upload-Only, SharIF Judge will not judge submissions of that problem. You can use `Zip`, `PDF` and `TXT` in allowed languages if you have enabled this option.
