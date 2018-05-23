@@ -1,10 +1,11 @@
 <?php
 /**
- * Sharif Judge online judge
+ * SharIF Judge online judge
  * @file User_model.php
  * @author Mohammad Javad Naderi <mjnaderi@gmail.com>
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
+use Dapphp\Radius\Radius;
 
 class User_model extends CI_Model
 {
@@ -118,7 +119,7 @@ class User_model extends CI_Model
 	 * @param $role
 	 * @return bool|string
 	 */
-	public function add_user($username, $email, $password, $role)
+	public function add_user($username, $email, $display_name, $password, $role)
 	{
 		if ( ! $this->form_validation->alpha_numeric($username) )
 			return 'Username may only contain alpha-numeric characters.';
@@ -137,6 +138,7 @@ class User_model extends CI_Model
 		$user=array(
 			'username' => $username,
 			'email' => $email,
+			'display_name' => $display_name,
 			'password' => $this->password_hash->HashPassword($password),
 			'role' => $role
 		);
@@ -173,26 +175,26 @@ class User_model extends CI_Model
 			if (strlen($line) == 0 OR $line[0] == '#')
 				continue; //ignore comments and empty lines
 
-			$parts = preg_split('/\s+/', $line);
-			if (count($parts) != 4)
-				continue; //ignore lines that not contain 4 parts
+			$parts = preg_split('/,+/', $line);
+			if (count($parts) != 5)
+				continue; //ignore lines that not contain 5 parts
 
-			if (strtolower(substr($parts[2], 0, 6)) == 'random')
+			if (strtolower(substr($parts[3], 0, 6)) == 'random')
 			{
 				// generate random password
-				$len = trim(substr($parts[2], 6), '[]');
+				$len = trim(substr($parts[3], 6), '[]');
 				if (is_numeric($len)){
 					$this->load->helper('string');
-					$parts[2] = shj_random_password($len);
+					$parts[3] = shj_random_password($len);
 				}
 			}
 
-			$result = $this->add_user($parts[0], $parts[1], $parts[2], $parts[3]);
+			$result = $this->add_user($parts[0], $parts[1], $parts[2], $parts[3], $parts[4]);
 
 			if ($result === TRUE)
-				array_push($users_ok, array($parts[0], $parts[1], $parts[2], $parts[3]));
+				array_push($users_ok, array($parts[0], $parts[1], $parts[2], $parts[3], $parts[4]));
 			else
-				array_push($users_error, array($parts[0], $parts[1], $parts[2], $parts[3], $result));
+				array_push($users_error, array($parts[0], $parts[1], $parts[2], $parts[3], $parts[4], $result));
 
 		} // end of loop
 
@@ -200,22 +202,12 @@ class User_model extends CI_Model
 		{
 			// sending usernames and passwords by email
 			$this->load->library('email');
+			$this->load->config('secrets');
 			$config = array(
 				'mailtype'  => 'html',
 				'charset'   => 'iso-8859-1'
 			);
-			/*
-			// You can use gmail's smtp server
-			$config = Array(
-				'protocol' => 'smtp',
-				'smtp_host' => 'ssl://smtp.googlemail.com',
-				'smtp_port' => 465,
-				'smtp_user' => 'example@gmail.com',
-				'smtp_pass' => 'your-gmail-password',
-				'mailtype'  => 'html',
-				'charset'   => 'iso-8859-1'
-			);
-			*/
+			$config = $this->config->item('shj_mail');
 			$this->email->initialize($config);
 			$this->email->set_newline("\r\n");
 			$count_users = count($users_ok);
@@ -225,12 +217,12 @@ class User_model extends CI_Model
 				$counter++;
 				$this->email->from($this->settings_model->get_setting('mail_from'), $this->settings_model->get_setting('mail_from_name'));
 				$this->email->to($user[1]);
-				$this->email->subject('Sharif Judge Username and Password');
+				$this->email->subject('SharIF Judge Username and Password');
 				$text = $this->settings_model->get_setting('add_user_mail');
 				$text = str_replace('{SITE_URL}', base_url(), $text);
-				$text = str_replace('{ROLE}', $user[3], $text);
+				$text = str_replace('{ROLE}', $user[4], $text);
 				$text = str_replace('{USERNAME}', $user[0], $text);
-				$text = str_replace('{PASSWORD}', htmlspecialchars($user[2]), $text);
+				$text = str_replace('{PASSWORD}', htmlspecialchars($user[3]), $text);
 				$text = str_replace('{LOGIN_URL}', base_url(), $text);
 				$this->email->message($text);
 				$this->email->send();
@@ -339,6 +331,15 @@ class User_model extends CI_Model
 			return FALSE;
 		if ($this->password_hash->CheckPassword($password, $query->row()->password))
 			return TRUE;
+			
+		$this->load->config('secrets');
+		if($this->config->item('shj_authenticate') == 'radius') {
+			$client = new Radius();
+			$client->setServer($this->config->item('shj_radius')['server']) // RADIUS server address
+				->setSecret($this->config->item('shj_radius')['secret']);
+			if($client->accessRequest($username, $password))
+				return TRUE;
+		}
 		return FALSE;
 	}
 
@@ -404,8 +405,14 @@ class User_model extends CI_Model
 		$the_user = $query->row();
 		$username = $the_user->username;
 
+		$display_name = $this->input->post('display_name');
+		$locked = $this->settings_model->get_setting(lock_student_display_name);
+		if ($locked == 1) {
+			$display_name = $the_user->display_name;
+		}
+
 		$user=array(
-			'display_name' => $this->input->post('display_name'),
+			'display_name' => $display_name,
 			'email' => $this->input->post('email')
 		);
 
@@ -451,22 +458,13 @@ class User_model extends CI_Model
 
 		// send the email:
 		$this->load->library('email');
+		$this->load->config('secrets');
+
 		$config = array(
 			'mailtype'  => 'html',
 			'charset'   => 'iso-8859-1'
 		);
-		/*
-		// You can use gmail's smtp server
-		$config = Array(
-			'protocol' => 'smtp',
-			'smtp_host' => 'ssl://smtp.googlemail.com',
-			'smtp_port' => 465,
-			'smtp_user' => 'example@gmail.com',
-			'smtp_pass' => 'your-gmail-password',
-			'mailtype'  => 'html',
-			'charset'   => 'iso-8859-1'
-		);
-		*/
+		$config = $this->config->item('shj_mail');
 		$this->email->initialize($config);
 		$this->email->set_newline("\r\n");
 		$this->email->from($this->settings_model->get_setting('mail_from'), $this->settings_model->get_setting('mail_from_name'));
@@ -586,7 +584,5 @@ class User_model extends CI_Model
 	}
 
 
-
-
-
+	// ------------------------------------------------------------------------
 }

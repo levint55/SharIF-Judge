@@ -1,6 +1,6 @@
 <?php
 /**
- * Sharif Judge online judge
+ * SharIF Judge online judge
  * @file Assignment_model.php
  * @author Mohammad Javad Naderi <mjnaderi@gmail.com>
  */
@@ -38,6 +38,9 @@ class Assignment_model extends CI_Model
 		{
 			$extra_time *= $extra_item;
 		}
+
+		$archived_assignment = $archived_assignment = $this->input->post('archived_assignment')!==NULL ? 1 : 0;
+
 		$assignment = array(
 			'id' => $id,
 			'name' => $this->input->post('assignment_name'),
@@ -51,7 +54,8 @@ class Assignment_model extends CI_Model
 			'finish_time' => date('Y-m-d H:i:s', strtotime($this->input->post('finish_time'))),
 			'extra_time' => $extra_time*60,
 			'late_rule' => $this->input->post('late_rule'),
-			'participants' => $this->input->post('participants')
+			'participants' => $this->input->post('participants'),
+			'archived_assignment' => $archived_assignment
 		);
 		if($edit)
 		{
@@ -98,7 +102,7 @@ class Assignment_model extends CI_Model
 				elseif ($item2 === 'pdf')
 					$item = 'PDF';
 				$item2 = strtolower($item);
-				if ( ! in_array($item2, array('c','c++','python 2','python 3','java','zip','pdf')))
+				if ( ! in_array($item2, array('c','c++','python 2','python 3','java','zip','pdf','txt')))
 					continue;
 				// If the problem is not Upload-Only, its language should be one of {C,C++,Python 2, Python 3,Java}
 				if ( ! in_array($i, $uo) && ! in_array($item2, array('c','c++','python 2','python 3','java')) )

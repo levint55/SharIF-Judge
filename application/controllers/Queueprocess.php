@@ -1,6 +1,6 @@
 <?php
 /**
- * Sharif Judge online judge
+ * SharIF Judge online judge
  * @file Queueprocess.php
  * @author Mohammad Javad Naderi <mjnaderi@gmail.com>
  */
@@ -130,6 +130,9 @@ class Queueprocess extends CI_Controller
 				$submission['pre_score'] = 0;
 				$submission['status'] = $output;
 			}
+
+			//reconnect to database incase we have run test for a long time.
+			 $this->db->reconnect();
 
 			// Save the result
 			$this->queue_model->save_judge_result_in_db($submission, $type);

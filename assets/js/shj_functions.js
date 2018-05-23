@@ -1,5 +1,5 @@
 /**
- * Sharif Judge
+ * SharIF Judge
  * @file shj_functions.js
  * @author Mohammad Javad Naderi <mjnaderi@gmail.com>
  */
@@ -474,6 +474,76 @@ $(document).ready(function(){
 				{addClass: 'btn shj-blue', text: 'No, Don\'t Delete', onClick: function($noty){$noty.close();}}
 			]
 		});
+	});
+});
+
+
+
+
+/**
+ * "Hall of Fame" page
+ */
+shj.modal_open = false;
+$(document).ready(function(){
+	$('.hof_details').click(function () {
+		var row = $(this).closest("tr");    // Find the row
+    var username = row.find(".username").text();
+		var display_name = row.find(".display_name").text();
+		var view_code_request = $.ajax({
+			cache: true,
+			type: 'POST',
+			url: shj.site_url+'halloffame/hof_details',
+			data: {
+				username: username,
+				shj_csrf_token: shj.csrf_token
+			},
+			success: function (response) {
+				var currentAssignment = '';
+				var prevAssignment = '';
+				var temp = '';
+
+				for (var i = 0; i < response.length; i++) {
+					if (response[i].scoreboard == 0) {
+						temp = temp + '--------------------------------------------------<br><b>' + response[i].assignment + '</b><br>Scoreboard Disabled!<br>';
+					}
+					else{
+						if (i == 0) {
+							temp = temp + '<b>' + response[i].assignment + '</b> <br>' + response[i].problem + ' : ' + response[i].score +'<br>';
+							prevAssignment = response[i].assignment;
+						}
+						else{
+							currentAssignment = response[i].assignment;
+							var index = currentAssignment.localeCompare(prevAssignment); //comparing previous assignment's name with current assignment's name
+							if (index == 0) {
+								temp = temp + response[i].problem + ' : ' + response[i].score + '<br>';
+								prevAssignment = currentAssignment;
+							}
+							else{
+								temp = temp + '--------------------------------------------------<br><b>'+currentAssignment + '</b><br>' + response[i].problem + ' : ' + response[i].score + '<br>';
+								prevAssignment = currentAssignment;
+							}
+						}
+					}
+				}
+				$('.modal_inside').html('<pre class="code-column">'+temp+'</pre>');
+				$('.modal_inside').prepend('<p><code> Hall of Fame Details | Username: '+username+' | Display Name: '+display_name+'</code></p>');
+			}
+		});
+		if (!shj.modal_open) {
+			shj.modal_open = true;
+			$('#shj_modal').reveal(
+				{
+					animationspeed: 300,
+					on_close_modal: function () {
+						view_code_request.abort();
+					},
+					on_finish_modal: function () {
+						$(".modal_inside").html('<div style="text-align: center;">Loading<br><img src="'+shj.base_url+'assets/images/loading.gif"/></div>');
+						shj.modal_open = false;
+					}
+				}
+			);
+		}
 	});
 });
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Sharif Judge online judge
+ * SharIF Judge online judge
  * @file Login.php
  * @author Mohammad Javad Naderi <mjnaderi@gmail.com>
  */
@@ -53,6 +53,8 @@ class Login extends CI_Controller
 			$username = $this->input->post('username');
 			$password = $this->input->post('password');
 			if($this->user_model->validate_user($username, $password)){
+				$ip_adrress = $this->input->ip_address();
+			
 				// setting the session and redirecting to dashboard:
 				$login_data = array(
 					'username'  => $username,
@@ -60,6 +62,7 @@ class Login extends CI_Controller
 				);
 				$this->session->set_userdata($login_data);
 				$this->user_model->update_login_time($username);
+				$this->logs_model->insert_to_logs($username,$ip_adrress);
 				redirect('/');
 			}
 			else
@@ -92,6 +95,7 @@ class Login extends CI_Controller
 			$this->user_model->add_user(
 				$this->input->post('username'),
 				$this->input->post('email'),
+				$this->input->post('displayname'),
 				$this->input->post('password'),
 				'student'
 			);

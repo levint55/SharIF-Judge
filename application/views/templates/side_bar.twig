@@ -1,5 +1,5 @@
 {#
- # Sharif Judge
+ # SharIF Judge
  # file: side_bar.twig
  # author: Mohammad Javad Naderi <mjnaderi@gmail.com>
  #}
@@ -67,11 +67,25 @@
 				<span class="sidebar_text">Scoreboard</span>
 			</a>
 		</li>
+    <li class="color-halloffame{{ selected=='halloffame' ? ' selected' }}">
+			<a href="{{ site_url('halloffame') }}">
+				<i class="fa fa-list-alt fa-lg"></i>
+				<span class="sidebar_text">Hall of Fame</span>
+			</a>
+		</li>
+    {% if user.level == 3 %}
+    <li class="color-logs{{ selected=='logs' ? ' selected' }}">
+			<a href="{{ site_url('logs') }}">
+				<i class="fa fa-book fa-lg"></i>
+				<span class="sidebar_text">24-hour Log</span>
+			</a>
+		</li>
+    {% endif %}
 	</ul>
 	<div id="sidebar_bottom">
 		<p>
-			<a href="https://github.com/mjnaderi/Sharif-Judge" target="_blank">&copy; Sharif Judge {{ SHJ_VERSION }}</a>
-			<a href="https://github.com/mjnaderi/Sharif-Judge/tree/docs" target="_blank">Docs</a>
+			<a href="https://github.com/ftisunpar/Sharif-Judge" target="_blank">&copy; SharIF Judge {{ SHJ_VERSION }}</a>
+			<a href="https://github.com/ftisunpar/Sharif-Judge/tree/docs" target="_blank">Docs</a>
 		</p>
 		<p class="timer"></p>
 		<div id="shj_collapse" class="pointer">

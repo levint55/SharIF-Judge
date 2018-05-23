@@ -1,6 +1,6 @@
 <?php
 /**
- * Sharif Judge online judge
+ * SharIF Judge online judge
  * @file shj_helper.php
  * @author Mohammad Javad Naderi <mjnaderi@gmail.com>
  */
@@ -81,6 +81,7 @@ if ( ! function_exists('filetype_to_extension'))
 			case 'java': return 'java';
 			case 'zip': return 'zip';
 			case 'pdf': return 'pdf';
+			case 'txt': return 'txt';
 			default: return FALSE;
 		}
 	}
@@ -104,6 +105,7 @@ if ( ! function_exists('filetype_to_language'))
 			case 'java': return 'Java';
 			case 'zip': return 'Zip';
 			case 'pdf': return 'PDF';
+			case 'txt': return 'TXT';
 			default: return FALSE;
 		}
 	}

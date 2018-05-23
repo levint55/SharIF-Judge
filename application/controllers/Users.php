@@ -1,10 +1,17 @@
 <?php
 /**
- * Sharif Judge online judge
+ * SharIF Judge online judge
  * @file Users.php
  * @author Mohammad Javad Naderi <mjnaderi@gmail.com>
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 
 class Users extends CI_Controller
 {
@@ -142,21 +149,21 @@ class Users extends CI_Controller
 		$now = shj_now_str(); // current time
 
 		// Load PHPExcel library
-		$this->load->library('phpexcel');
+		$phpspreedsheet = new Spreadsheet();
 
 		// Set document properties
-		$this->phpexcel->getProperties()->setCreator('Sharif Judge')
-			->setLastModifiedBy('Sharif Judge')
-			->setTitle('Sharif Judge Users')
-			->setSubject('Sharif Judge Users')
-			->setDescription('List of Sharif Judge users ('.$now.')');
+		$phpspreedsheet->getProperties()->setCreator('SharIF Judge')
+			->setLastModifiedBy('SharIF Judge')
+			->setTitle('SharIF Judge Users')
+			->setSubject('SharIF Judge Users')
+			->setDescription('List of SharIF Judge users ('.$now.')');
 
 		// Name of the file sent to browser
 		$output_filename = 'sharifjudge_users';
 
 		// Set active sheet
-		$this->phpexcel->setActiveSheetIndex(0);
-		$sheet = $this->phpexcel->getActiveSheet();
+		$phpspreedsheet->setActiveSheetIndex(0);
+		$sheet = $phpspreedsheet->getActiveSheet();
 
 		// Add current time to document
 		$sheet->fromArray(array('Time:',$now), null, 'A1', true);
@@ -170,7 +177,7 @@ class Users extends CI_Controller
 		$sheet->getStyle('A3:'.$highest_column.'3')->applyFromArray(
 			array(
 				'fill' => array(
-					'type' => PHPExcel_Style_Fill::FILL_SOLID,
+					'fillType' => Fill::FILL_SOLID,
 					'color' => array('rgb' => '173C45')
 				),
 				'font'  => array(
@@ -205,7 +212,7 @@ class Users extends CI_Controller
 			$sheet->getStyle('A'.$i.':'.$highest_column.$i)->applyFromArray(
 				array(
 					'fill' => array(
-						'type' => PHPExcel_Style_Fill::FILL_SOLID,
+						'fillType' => Fill::FILL_SOLID,
 						'color' => array('rgb' => (($i%2)?'F0F0F0':'FAFAFA'))
 					)
 				)
@@ -215,7 +222,7 @@ class Users extends CI_Controller
 		// Set text align to center
 		$sheet->getStyle( $sheet->calculateWorksheetDimension() )
 			->getAlignment()
-			->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+			->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
 		// Making columns autosize
 		for ($i=2;$i<count($header);$i++)
@@ -226,7 +233,7 @@ class Users extends CI_Controller
 			array(
 				'borders' => array(
 					'outline' => array(
-						'style' => PHPExcel_Style_Border::BORDER_THIN,
+						'borderStyle' => Border::BORDER_THIN,
 						'color' => array('rgb' => '444444'),
 					),
 				)
@@ -244,7 +251,7 @@ class Users extends CI_Controller
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 		header('Content-Disposition: attachment;filename="'.$output_filename.'.'.$ext.'"');
 		header('Cache-Control: max-age=0');
-		$objWriter = PHPExcel_IOFactory::createWriter($this->phpexcel, ($ext==='xlsx'?'Excel2007':'Excel5'));
+		$objWriter = IOFactory::createWriter($phpspreedsheet, ucfirst($ext));
 		$objWriter->save('php://output');
 	}
 
