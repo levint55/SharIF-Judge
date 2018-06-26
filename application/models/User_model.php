@@ -176,26 +176,28 @@ class User_model extends CI_Model
 				continue; //ignore comments and empty lines
 
 			$parts = preg_split('/,+/', $line);
-			if (count($parts) != 5)
-				continue; //ignore lines that not contain 5 parts
-
-			if (strtolower(substr($parts[3], 0, 6)) == 'random')
-			{
-				// generate random password
-				$len = trim(substr($parts[3], 6), '[]');
-				if (is_numeric($len)){
-					$this->load->helper('string');
-					$parts[3] = shj_random_password($len);
+			if (count($parts) == 5){
+				if (strtolower(substr($parts[3], 0, 6)) == 'random')
+				{
+					// generate random password
+					$len = trim(substr($parts[3], 6), '[]');
+					if (is_numeric($len)){
+						$this->load->helper('string');
+						$parts[3] = shj_random_password($len);
+					}
 				}
+
+				$result = $this->add_user($parts[0], $parts[1], $parts[2], $parts[3], $parts[4]);
+
+				if ($result === TRUE)
+					array_push($users_ok, array($parts[0], $parts[1], $parts[2], $parts[3], $parts[4]));
+				else
+					array_push($users_error, array($parts[0], $parts[1], $parts[2], $parts[3], $parts[4], $result));
 			}
-
-			$result = $this->add_user($parts[0], $parts[1], $parts[2], $parts[3], $parts[4]);
-
-			if ($result === TRUE)
-				array_push($users_ok, array($parts[0], $parts[1], $parts[2], $parts[3], $parts[4]));
-			else
-				array_push($users_error, array($parts[0], $parts[1], $parts[2], $parts[3], $parts[4], $result));
-
+			else{
+				array_push($users_error, array($parts[0], $parts[1], $parts[2], $parts[3], $parts[4], 'Wrong Format'));
+				continue; //ignore lines that not contain 5 parts
+			}
 		} // end of loop
 
 		if ($send_mail)
@@ -331,7 +333,7 @@ class User_model extends CI_Model
 			return FALSE;
 		if ($this->password_hash->CheckPassword($password, $query->row()->password))
 			return TRUE;
-			
+
 		$this->load->config('secrets');
 		if($this->config->item('shj_authenticate') == 'radius') {
 			$client = new Radius();
