@@ -48,7 +48,8 @@ For running SharIF Judge, a Linux server with following requirements is needed:
   1. Download the latest release from [download page](https://github.com/ftisunpar/Sharif-Judge/releases) and unpack downloaded file in your public html directory.
   2. **[Optional]** Move folders `system` and `application` somewhere outside your public directory. Then save their full path in `index.php` file (`$system_path` and `$application_folder` variables).
   3. Create a MySql or PostgreSql database for SharIF Judge. Do not install any database connection package for C/C++, Java or Python.
-  4. Set database connection settings in `application/config/database.php`.
+  4. Copy `application/config/database.example.php` to `application/config/database.php` and update the file according to your database configuration.
+  4. Copy `application/config/secrets.example.php` to `application/config/secrets.php` and update the file according to your RADIUS and SMTP configuration.
   5. Make `application/cache/Twig` writable by php.
   6. Open the main page of SharIF Judge in a web browser and follow the installation process.
   7. Log in with your admin account.
