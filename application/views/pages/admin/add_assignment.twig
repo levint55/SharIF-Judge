@@ -16,6 +16,11 @@
 <script>
 	$(document).ready(function(){
 		tabOverride.set(document.getElementsByTagName('textarea'));
+		$("textarea").keyup(function (e) {
+			if (e.which==27){
+				{# TODO #}
+    		}
+		});
 	});
 </script>
 <script type="text/javascript" src="{{ base_url('assets/js/jquery-ui-timepicker-addon.js') }}"></script>
