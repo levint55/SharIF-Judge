@@ -16,9 +16,11 @@
 <script>
 	$(document).ready(function(){
 		tabOverride.set(document.getElementsByTagName('textarea'));
+		$switch = false;
 		$("textarea").keyup(function (e) {
 			if (e.which==27){
-				{# TODO #}
+				tabOverride.set(document.getElementsByTagName('textarea'),$switch);
+				$switch = !$switch;
     		}
 		});
 	});
