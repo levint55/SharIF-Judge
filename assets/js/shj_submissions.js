@@ -87,6 +87,11 @@ $(document).ready(function () {
 			}
 		});
 	});
+	$(".set_final").on('keyup', function (e) {
+		if(e.which==13){
+			$(this).trigger("click");
+		}
+	})
 	$(".set_final").click(
 		function () {
 			var row = $(this).parents('tr');
