@@ -15,11 +15,11 @@
 <script type='text/javascript' src="{{ base_url('assets/js/taboverride.min.js') }}"></script>
 <script>
 $(document).ready(function(){
-		tabOverride.set(document.getElementsByTagName('textarea'));
+		tabOverride.set(document.getElementById('md_editor'));
 		$switch = false;
 		$("textarea").keyup(function (e) {
 			if (e.which==27){
-				tabOverride.set(document.getElementsByTagName('textarea'),$switch);
+				tabOverride.set(document.getElementById('md_editor'),$switch);
 				$switch = !$switch;
     		}
 		});
