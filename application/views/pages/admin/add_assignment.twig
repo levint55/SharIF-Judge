@@ -16,6 +16,13 @@
 <script>
 	$(document).ready(function(){
 		tabOverride.set(document.getElementsByTagName('textarea'));
+		$switch = false;
+		$("textarea").keyup(function (e) {
+			if (e.which==27){
+				tabOverride.set(document.getElementsByTagName('textarea'),$switch);
+				$switch = !$switch;
+    		}
+		});
 	});
 </script>
 <script type="text/javascript" src="{{ base_url('assets/js/jquery-ui-timepicker-addon.js') }}"></script>
@@ -126,6 +133,7 @@
 		<label for="form_participants">Participants<br>
 			<span class="form_comment">Enter username of participants here (comma separated).
 				Only these users are able to submit. You can use keyword "ALL".</span>
+			<span class="form_comment clear">Press "esc" to enable/disable tabindent</span>
 		</label>
 		<textarea id="form_participants" name="participants" rows="5" class="sharif_input medium">{{ edit ? edit_assignment.participants : set_value('participants', 'ALL') }}</textarea>
 	</p>
@@ -174,6 +182,7 @@
 	<p class="input_p">
 		<label for="form_late_rule">Coefficient rule (<a target="_blank" href="https://github.com/ifunpar/Sharif-Judge/blob/docs/v1.4/add_assignment.md#coefficient-rule">?</a>)</label><br>
 		<span class="form_comment medium clear" style="display: block;">PHP script without &lt;?php ?&gt; tags</span>
+		<span class="form_comment clear">Press "esc" to enable/disable tabindent</span><br>
 		<textarea id="form_late_rule" name="late_rule" rows="20" class="sharif_input add_text">{{ edit ? edit_assignment.late_rule : set_value('late_rule', default_late_rule) }}</textarea>
 		{{ form_error('late_rule', '<div class="shj_error">', '</div>') }}
 	</p>
