@@ -341,6 +341,16 @@ $(document).ready(function () {
  * Top Bar
  */
 $(document).ready(function () {
+	$('.shj_menu').on('focusin',function(e){
+		$(this).children(".top_menu").show();
+		$(this).addClass('shj_white');
+		$("#side_bar").on('focusin', function (e) {
+			if(!$(e.target).parent().is('top_menu')){
+				$('.shj_menu').children(".top_menu").hide();
+				$('.shj_menu').removeClass('shj_white');
+			}
+		})
+	});
 	$("#top_bar").hoverIntent({
 		over: function () {
 			$(this).children(".top_menu").show();
@@ -352,6 +362,11 @@ $(document).ready(function () {
 		},
 		selector: '.top_object.shj_menu'
 	});
+	$(".select_assignment").on('keyup', function (e) {
+		if(e.which==13){
+			$(this).trigger("click");
+		}
+	})
 	$(".select_assignment").click(
 		function () {
 			var id = $(this).children('i').addBack('i').data('id');
@@ -392,6 +407,11 @@ $(document).ready(function () {
  * "Users" page
  */
 $(document).ready(function(){
+	$(".delete_user").on('keyup', function (e) {
+		if(e.which==13){
+			$(this).trigger("click");
+		}
+	})
 	$('.delete_user').click(function(){
 		var row = $(this).parents('tr');
 		var user_id = row.data('id');
@@ -435,6 +455,11 @@ $(document).ready(function(){
 			]
 		});
 	});
+	$(".delete_submissions").on('keyup', function (e) {
+		if(e.which==13){
+			$(this).trigger("click");
+		}
+	})
 	$('.delete_submissions').click(function(){
 		var row = $(this).parents('tr');
 		var user_id = row.data('id');
