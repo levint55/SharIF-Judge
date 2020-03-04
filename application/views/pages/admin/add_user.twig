@@ -22,6 +22,13 @@
 <script>
 	$(document).ready(function(){
 		tabOverride.set(document.getElementsByTagName('textarea'));
+		$switch = false;
+		$("textarea").keyup(function (e) {
+			if (e.which==27){
+				tabOverride.set(document.getElementsByTagName('textarea'),$switch);
+				$switch = !$switch;
+    		}
+		});
 	});
 </script>
 <script>
@@ -59,6 +66,7 @@
 	<input type="checkbox" name="send_mail" id="send_mail" /> Send usernames and passwords by email (Waits <input type="text" name="delay" id="delay" class="sharif_input tiny" value="2"/> second(s) before sending each email, so please be patient).
 </p>
 <p class="input_p">
+<span class="form_comment clear">Press "esc" to enable/disable tabindent</span><br>
 <textarea name="new_users" id="new_users" rows="20" cols="80" class="sharif_input">
 # Lines starting with a # sign are comments.
 # Each line (except comments) represents a user.
