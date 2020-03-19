@@ -12,6 +12,11 @@ $(document).ready(function () {
 		e.preventDefault();
 		$('.code-column').selectText();
 	});
+	$(".btn").on('keyup', function (e) {
+		if(e.which==13){
+			$(this).trigger("click");
+		}
+	})
 	$(".btn").click(function () {
 		var button = $(this);
 		var row = button.parents('tr');
@@ -62,6 +67,11 @@ $(document).ready(function () {
 
 	});
 	$(".shj_rejudge").attr('title', 'Rejudge');
+	$(".shj_rejudge").on('keyup', function (e) {
+		if(e.which==13){
+			$(this).trigger("click");
+		}
+	})
 	$(".shj_rejudge").click(function () {
 		var row = $(this).parents('tr');
 		$.ajax({

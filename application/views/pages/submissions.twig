@@ -148,7 +148,7 @@
 					{% else %}
 						{% set submission_class = 'btn shj-blue' %}
 					{% endif %}
-					<div class="{{ submission_class }}" data-type="result" >
+					<div tabindex="0" class="{{ submission_class }}" data-type="result" >
 						{% if submission.status == 'SCORE' %}
 							{{ submission.final_score }}
 						{% else %}
@@ -159,9 +159,9 @@
 			</td>
 			<td>
 				{% if submission.file_type == 'zip' or submission.file_type == 'pdf' or submission.file_type == 'txt' %}
-					<div class="btn shj-orange" data-type="download">Download</div>
+					<div tabindex="0" class="btn shj-orange" data-type="download">Download</div>
 				{% else %}
-					<div class="btn shj-orange" data-type="code" >Code</div>
+					<div tabindex="0" class="btn shj-orange" data-type="code" >Code</div>
 				{% endif %}
 			</td>
 			{% if user.level > 0 %}
@@ -169,13 +169,13 @@
 				{% if submission.status == 'Uploaded' %}
 					---
 				{% else %}
-					<div class="btn" data-type="log" >Log</div>
+					<div tabindex="0" class="btn" data-type="log" >Log</div>
 				{% endif %}
 			</td>
 			{% endif %}
 			{% if user.level >= 2 %}
 				<td>
-					<div class="shj_rejudge pointer"><i class="fa fa-refresh fa-lg color10"></i></div>
+					<div tabindex="0" class="shj_rejudge pointer"><i class="fa fa-refresh fa-lg color10"></i></div>
 				</td>
 			{% endif %}
 		</tr>
