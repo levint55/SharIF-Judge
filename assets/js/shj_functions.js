@@ -407,11 +407,6 @@ $(document).ready(function () {
  * "Users" page
  */
 $(document).ready(function(){
-	$(".delete_user").on('keyup', function (e) {
-		if(e.which==13){
-			$(this).trigger("click");
-		}
-	})
 	$('.delete_user').click(function(){
 		var row = $(this).parents('tr');
 		var user_id = row.data('id');
@@ -455,11 +450,6 @@ $(document).ready(function(){
 			]
 		});
 	});
-	$(".delete_submissions").on('keyup', function (e) {
-		if(e.which==13){
-			$(this).trigger("click");
-		}
-	})
 	$('.delete_submissions').click(function(){
 		var row = $(this).parents('tr');
 		var user_id = row.data('id');

@@ -31,19 +31,10 @@
 	<td><input type="text" name="languages[]" class="sharif_input short2" value="C,C++,Python 2,Python 3,Java"/></td>\
 	<td><input type="text" name="diff_cmd[]" class="sharif_input tiny" value="diff"/></td>\
 	<td><input type="text" name="diff_arg[]" class="sharif_input tiny" value="-bB"/></td>\
-	<td><input type="checkbox" name="is_upload_only[]" class="check" value="PID"/><td><i tabindex="0" class="fa fa-times-circle fa-lg color1 delete_problem pointer"></i></td></td>\
+	<td><input type="checkbox" name="is_upload_only[]" class="check" value="PID"/></td>\
+	<td><button class="delete_problem" type="button" aria-label="Delete Problem"><i class="fa fa-times-circle fa-lg color1 pointer"></i></button></td>\
 </tr>';
 	$(document).ready(function(){
-		$("#add").on('keyup', function (e) {
-			if(e.which==13){
-				$(this).trigger("click");
-			}
-		})
-		$(".delete_problem").on('keyup', function (e) {
-			if(e.which==13){
-				$(this).trigger("click");
-			}
-		})
 		$("#add").click(function(){
 			$('#problems_table>tbody').append(shj.row.replace(/PID/g, (shj.num_of_problems+1)));
 			shj.num_of_problems++;
@@ -188,7 +179,7 @@
 		{{ form_error('late_rule', '<div class="shj_error">', '</div>') }}
 	</p>
 </div>
-<p class="input_p" id="add_problems">Problems <i tabindex="0" class="fa fa-plus-circle fa-lg color11 pointer" id="add"></i>
+<p class="input_p" id="add_problems">Problems <button type="button" id="add" aria-label="Add Problem"><i class="fa fa-plus-circle fa-lg color11 pointer"></i></button>
 <table id="problems_table">
 	<thead>
 	<tr>
@@ -221,7 +212,7 @@
 			<td><input type="text" name="diff_cmd[]" class="sharif_input tiny" value="{{ problem.diff_cmd }}"/></td>
 			<td><input type="text" name="diff_arg[]" class="sharif_input tiny" value="{{ problem.diff_arg }}"/></td>
 			<td><input type="checkbox" name="is_upload_only[]" class="check" value="{{ problem.id }}" {{ problem.is_upload_only ? 'checked' }}/></td>
-			<td><i tabindex="0" class="fa fa-times-circle fa-lg color1 delete_problem pointer"></i></td>
+			<td><button class="delete_problem" type="button" aria-label="Delete Problem"><i class="fa fa-times-circle fa-lg color1 pointer"></i></td>
 		</tr>
 	{% endfor %}
 	</tbody>
