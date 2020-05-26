@@ -15,8 +15,15 @@
 <script type='text/javascript' src="{{ base_url('assets/js/taboverride.min.js') }}"></script>
 <script>
 $(document).ready(function(){
-	tabOverride.set(document.getElementsByTagName('textarea'));
-});
+		tabOverride.set(document.getElementsByTagName('textarea'));
+		$switch = false;
+		$("textarea").keyup(function (e) {
+			if (e.which==27){
+				tabOverride.set(document.getElementsByTagName('textarea'),$switch);
+				$switch = !$switch;
+    		}
+		});
+	});
 </script>
 {% endblock %}
 
@@ -122,6 +129,7 @@ $(document).ready(function(){
 	<p class="input_p">
 		<label for="form_late_rule">Default Coefficient Rule</label>
 		<span class="form_comment clear">PHP script without &lt;?php ?&gt; tags</span><br>
+		<span class="form_comment clear">Press "esc" to enable/disable tabindent</span><br>
 		<textarea id="form_late_rule" name="default_late_rule" rows="15" class="sharif_input add_text clear">{{ default_late_rule }}</textarea>
 	</p>
 
@@ -140,11 +148,13 @@ $(document).ready(function(){
 	<p class="input_p">
 		<label for="form_mail_reset">Password Reset Email</label>
 		<span class="form_comment">You can use {SITE_URL}, {RESET_LINK} and {VALID_TIME}</span><br>
+		<span class="form_comment clear">Press "esc" to enable/disable tabindent</span><br>
 		<textarea id="form_mail_reset" name="reset_password_mail" rows="15" class="sharif_input add_text clear">{{ reset_password_mail }}</textarea>
 	</p>
 	<p class="input_p">
 		<label for="form_mail_add">Add User Email</label>
 		<span class="form_comment clear">You can use {SITE_URL}, {LOGIN_URL}, {ROLE}, {USERNAME} and {PASSWORD}</span><br>
+		<span class="form_comment clear">Press "esc" to enable/disable tabindent</span><br>
 		<textarea id="form_mail_add" name="add_user_mail" rows="15" class="sharif_input add_text clear">{{ add_user_mail }}</textarea>
 	</p>
 
@@ -203,18 +213,22 @@ $(document).ready(function(){
 	</p>
 	<p class="input_p">
 		<label for="form_def_c">Shield Rules (for C)</label>
+		<span class="form_comment clear">Press "esc" to enable/disable tabindent</span><br>
 		<textarea id="form_def_c" name="def_c" rows="15" class="sharif_input add_text clear">{{ defc }}</textarea>
 	</p>
 	<p class="input_p">
 		<label for="form_def_cpp">Shield Rules (for C++)</label>
+		<span class="form_comment clear">Press "esc" to enable/disable tabindent</span><br>
 		<textarea id="form_def_cpp" name="def_cpp" rows="15" class="sharif_input add_text clear">{{ defcpp }}</textarea>
 	</p>
 	<p class="input_p">
 		<label for="form_shield_py2">Shield (for Python 2)</label>
+		<span class="form_comment clear">Press "esc" to enable/disable tabindent</span><br>
 		<textarea id="form_shield_py2" name="shield_py2" rows="15" class="sharif_input add_text clear">{{ shield_py2 }}</textarea>
 	</p>
 	<p class="input_p">
 		<label for="form_shield_py3">Shield (for Python 3)</label>
+		<span class="form_comment clear">Press "esc" to enable/disable tabindent</span><br>
 		<textarea id="form_shield_py3" name="shield_py3" rows="15" class="sharif_input add_text clear">{{ shield_py3 }}</textarea>
 	</p>
 	<p class="input_p">

@@ -15,8 +15,15 @@
 <script type='text/javascript' src="{{ base_url('assets/js/taboverride.min.js') }}"></script>
 <script>
 $(document).ready(function(){
-	tabOverride.set(document.getElementById('md_editor'));
-});
+		tabOverride.set(document.getElementById('md_editor'));
+		$switch = false;
+		$("textarea").keyup(function (e) {
+			if (e.which==27){
+				tabOverride.set(document.getElementById('md_editor'),$switch);
+				$switch = !$switch;
+    		}
+		});
+	});
 </script>
 {% endblock %}
 
@@ -176,8 +183,9 @@ Violets are blue.
 		Problem {{ problem.id }}
 	</p>
 	{{ form_open("problems/edit/md/#{description_assignment.id}/#{problem.id}") }}
+	<span class="form_comment clear">Press "esc" to enable/disable tabindent</span><br>
 	<p class="input_p">
-		<textarea dir="auto" name="text" rows="30" cols="75" class="sharif_input" id="md_editor">{{ problem.description }}</textarea>
+		<textarea dir="auto" name="text" rows="30" cols="75" class="sharif_input" id="md_editor" aria-label="Markdown Editor">{{ problem.description }}</textarea>
 	</p>
 	<p class="input_p">
 		<input type="submit" value="Save" class="sharif_input"/>

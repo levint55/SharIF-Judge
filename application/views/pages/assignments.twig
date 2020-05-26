@@ -69,7 +69,7 @@
 		{% endif %}
 	</td>
 	<td>
-		<a href="{{ site_url('assignments/pdf/'~item.id) }}"><img src="{{ base_url('assets/images/pdf.svg') }}" /></a>
+		<a href="{{ site_url('assignments/pdf/'~item.id) }}"><img src="{{ base_url('assets/images/pdf.svg') }}" aria-label="Download PDF For Assignment {{ item.name }}"/></a>
 	</td>
 	{% if user.level > 0 %}
 	<td>

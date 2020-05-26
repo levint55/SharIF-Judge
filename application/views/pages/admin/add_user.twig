@@ -22,6 +22,13 @@
 <script>
 	$(document).ready(function(){
 		tabOverride.set(document.getElementsByTagName('textarea'));
+		$switch = false;
+		$("textarea").keyup(function (e) {
+			if (e.which==27){
+				tabOverride.set(document.getElementsByTagName('textarea'),$switch);
+				$switch = !$switch;
+    		}
+		});
 	});
 </script>
 <script>
@@ -56,10 +63,11 @@
 	<li>If you want to send passwords by email, do not add too many users at one time. This may result in mail delivery fail.</li>
 </ul>
 <p class="input_p">
-	<input type="checkbox" name="send_mail" id="send_mail" /> Send usernames and passwords by email (Waits <input type="text" name="delay" id="delay" class="sharif_input tiny" value="2"/> second(s) before sending each email, so please be patient).
+	<input type="checkbox" name="send_mail" id="send_mail" aria-label="Send mail"/> Send usernames and passwords by email (Waits <input type="text" name="delay" id="delay" class="sharif_input tiny" value="2" aria-label="Delay"/> second(s) before sending each email, so please be patient).
 </p>
 <p class="input_p">
-<textarea name="new_users" id="new_users" rows="20" cols="80" class="sharif_input">
+<span class="form_comment clear">Press "esc" to enable/disable tabindent</span><br>
+<textarea name="new_users" id="new_users" rows="20" cols="80" class="sharif_input" aria-label="Command for creating new user">
 # Lines starting with a # sign are comments.
 # Each line (except comments) represents a user.
 # The syntax of each line is:

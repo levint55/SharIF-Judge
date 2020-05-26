@@ -146,6 +146,26 @@ blockquote {
 	margin-left: 7px!important;
 }
 
+.skip {
+	position: absolute;
+	top: -1000px;
+	left: -1000px;
+	height: 1px;
+	width: 1px;
+	text-align: left;
+	overflow: hidden;
+}
+
+a.skip:active, 
+a.skip:focus, 
+a.skip:hover {
+	left: 0; 
+	top: 0;
+	width: auto; 
+	height: auto; 
+	overflow: visible; 
+}
+
 /********************************************/
 div#top_bar {
 	top: 0;
@@ -569,6 +589,14 @@ div#page_title:before {
 
 div#page_title > i + span {
 	margin-left: 8px;
+}
+
+div#page_title > h1 {
+	margin-left: 8px;
+	display: inline !important;
+	font-size: 20px !important;
+	margin-block-start: 0em !important;
+	margin-block-end: 0em !important;
 }
 
 span.title_menu_item {
