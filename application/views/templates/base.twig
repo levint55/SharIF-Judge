@@ -4,7 +4,7 @@
  # author: Mohammad Javad Naderi <mjnaderi@gmail.com>
  #}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<title>{% block head_title %}{% endblock %} - SharIF Judge</title>
 	<meta content="text/html" charset="UTF-8">
@@ -51,6 +51,8 @@ shj.color_scheme = 'github';
 {% block other_assets %}{% endblock %}
 
 <body id="body">
+<a href="#page_title" class="skip">Skip to content</a>
+
 {% include 'templates/top_bar.twig' %}
 {% include 'templates/side_bar.twig' %}
 <div id="main_container" class="scroll-wrapper">
@@ -58,7 +60,7 @@ shj.color_scheme = 'github';
 
 		<div id="page_title">
 			<i class="fa {% block icon %}{% endblock %}"></i>
-			<span dir="auto">{% block title %}{% endblock %}</span>
+			<h1 dir="auto">{% block title %}{% endblock %}</h1>
 			{% block title_menu %}{% endblock %}
 		</div>
 

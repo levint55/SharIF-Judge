@@ -96,7 +96,7 @@ $(document).ready(function(){
 		<input type="hidden" name="problem" value="{{ problem.id }}"/>
 
 		<p class="input_p">
-			<select id="languages" name="language" class="sharif_input full-width">
+			<select id="languages" name="language" class="sharif_input full-width" aria-label="Select Language">
 				<option value="0" selected="selected">-- Select Language --</option>
 				{% for l in problem.allowed_languages %}
 					<option value="{{ l }}">{{ l }}</option>
@@ -104,7 +104,7 @@ $(document).ready(function(){
 			</select>
 		</p>
 		<p class="input_p">
-			<input type="file" id="file" class="sharif_input full-width" name="userfile"/>
+			<input type="file" id="file" class="sharif_input full-width" name="userfile" aria-label="Upload File"/>
 		</p>
 		<p class="input_p">
 			<input type="submit" value="Submit" class="sharif_input"/>

@@ -29,16 +29,16 @@
 <script>
 	shj.num_of_problems={{ problems|length }};
 	shj.row='<tr><td>PID</td>\
-	<td><input type="text" name="name[]" class="sharif_input short" value="Problem "/></td>\
-	<td><input type="text" name="score[]" class="sharif_input tiny2" value="100"/></td>\
-	<td><input type="text" name="c_time_limit[]" class="sharif_input tiny2" value="500"/></td>\
-	<td><input type="text" name="python_time_limit[]" class="sharif_input tiny2" value="1500"/></td>\
-	<td><input type="text" name="java_time_limit[]" class="sharif_input tiny2" value="2000"/></td>\
-	<td><input type="text" name="memory_limit[]" class="sharif_input tiny" value="50000"/></td>\
-	<td><input type="text" name="languages[]" class="sharif_input short2" value="C,C++,Python 2,Python 3,Java"/></td>\
-	<td><input type="text" name="diff_cmd[]" class="sharif_input tiny" value="diff"/></td>\
-	<td><input type="text" name="diff_arg[]" class="sharif_input tiny" value="-bB"/></td>\
-	<td><input type="checkbox" name="is_upload_only[]" class="check" value="PID"/><td><i class="fa fa-times-circle fa-lg color1 delete_problem pointer"></i></td></td>\
+	<td><input aria-label="Problem Name" type="text" name="name[]" class="sharif_input short" value="Problem "/></td>\
+	<td><input aria-label="Score" type="text" name="score[]" class="sharif_input tiny2" value="100"/></td>\
+	<td><input aria-label="Time Limit for C" type="text" name="c_time_limit[]" class="sharif_input tiny2" value="500"/></td>\
+	<td><input aria-label="Time Limit for Python" type="text" name="python_time_limit[]" class="sharif_input tiny2" value="1500"/></td>\
+	<td><input aria-label="Time Limit for Java" type="text" name="java_time_limit[]" class="sharif_input tiny2" value="2000"/></td>\
+	<td><input aria-label="Memory Limit" type="text" name="memory_limit[]" class="sharif_input tiny" value="50000"/></td>\
+	<td><input aria-label="Allowed Languages" type="text" name="languages[]" class="sharif_input short2" value="C,C++,Python 2,Python 3,Java"/></td>\
+	<td><input aria-label="Diff Command" type="text" name="diff_cmd[]" class="sharif_input tiny" value="diff"/></td>\
+	<td><input aria-label="Diff Argument" type="text" name="diff_arg[]" class="sharif_input tiny" value="-bB"/></td>\
+	<td><input aria-label="Upload Only" type="checkbox" name="is_upload_only[]" class="check" value="PID"/><td><i class="fa fa-times-circle fa-lg color1 delete_problem pointer"></i></td></td>\
 </tr>';
 	$(document).ready(function(){
 		$("#add").click(function(){
@@ -126,7 +126,7 @@
 			Extra Time (minutes)<br>
 			<span class="form_comment">Extra time for late submissions.</span>
 		</label>
-		<input id="form_extra_time" type="text" name="extra_time" id="extra_time" class="sharif_input medium" value="{{ edit ? edit_assignment.extra_time|extra_time_formatter : set_value('extra_time') }}" />
+		<input id="form_extra_time" type="text" name="extra_time" class="sharif_input medium" value="{{ edit ? edit_assignment.extra_time|extra_time_formatter : set_value('extra_time') }}" />
 		{{ form_error('extra_time', '<div class="shj_error">', '</div>') }}
 	</p>
 	<p class="input_p clear">
@@ -196,10 +196,10 @@
 		<th rowspan="2">Score</th>
 		<th colspan="3" style="border-bottom: 1px solid #BDBDBD">Time Limit (ms)</th>
 		<th rowspan="2">Memory<br>Limit (kB)</th>
-		<th rowspan="2">Allowed<br>Languages (<a target="_blank" href="https://github.com/ifunpar/Sharif-Judge/blob/docs/v1.4/add_assignment.md#allowed-languages">?</a>)</th>
-		<th rowspan="2">Diff<br>Command (<a target="_blank" href="https://github.com/ifunpar/Sharif-Judge/blob/docs/v1.4/add_assignment.md#diff-command">?</a>)</th>
-		<th rowspan="2">Diff<br>Argument (<a target="_blank" href="https://github.com/ifunpar/Sharif-Judge/blob/docs/v1.4/add_assignment.md#diff-arguments">?</a>)</th>
-		<th rowspan="2">Upload<br>Only (<a target="_blank" href="https://github.com/ifunpar/Sharif-Judge/blob/docs/v1.4/add_assignment.md#upload-only">?</a>)</th>
+		<th rowspan="2">Allowed<br>Languages (<a aria-label="Link Help For Languages" target="_blank" href="https://github.com/ifunpar/Sharif-Judge/blob/docs/v1.4/add_assignment.md#allowed-languages">?</a>)</th>
+		<th rowspan="2">Diff<br>Command (<a aria-label="Link Help For Diff Command" target="_blank" href="https://github.com/ifunpar/Sharif-Judge/blob/docs/v1.4/add_assignment.md#diff-command">?</a>)</th>
+		<th rowspan="2">Diff<br>Argument (<a aria-label="Link Help For Diff Argument" target="_blank" href="https://github.com/ifunpar/Sharif-Judge/blob/docs/v1.4/add_assignment.md#diff-arguments">?</a>)</th>
+		<th rowspan="2">Upload<br>Only (<a aria-label="Link Help For Upload Only" target="_blank" href="https://github.com/ifunpar/Sharif-Judge/blob/docs/v1.4/add_assignment.md#upload-only">?</a>)</th>
 		<th rowspan="2"></th>
 	</tr>
 	<tr>
@@ -210,16 +210,16 @@
 	{% for problem in problems %}
 		<tr>
 			<td>{{ problem.id }}</td>
-			<td><input type="text" name="name[]" class="sharif_input short" value="{{ problem.name }}"/></td>
-			<td><input type="text" name="score[]" class="sharif_input tiny2" value="{{ problem.score }}"/></td>
-			<td><input type="text" name="c_time_limit[]" class="sharif_input tiny2" value="{{ problem.c_time_limit }}"/></td>
-			<td><input type="text" name="python_time_limit[]" class="sharif_input tiny2" value="{{ problem.python_time_limit }}"/></td>
-			<td><input type="text" name="java_time_limit[]" class="sharif_input tiny2" value="{{ problem.java_time_limit }}"/></td>
-			<td><input type="text" name="memory_limit[]" class="sharif_input tiny" value="{{ problem.memory_limit }}"/></td>
-			<td><input type="text" name="languages[]" class="sharif_input short2" value="{{ problem.allowed_languages }}"/></td>
-			<td><input type="text" name="diff_cmd[]" class="sharif_input tiny" value="{{ problem.diff_cmd }}"/></td>
-			<td><input type="text" name="diff_arg[]" class="sharif_input tiny" value="{{ problem.diff_arg }}"/></td>
-			<td><input type="checkbox" name="is_upload_only[]" class="check" value="{{ problem.id }}" {{ problem.is_upload_only ? 'checked' }}/></td>
+			<td><input aria-label="Problem Name" type="text" name="name[]" class="sharif_input short" value="{{ problem.name }}"/></td>
+			<td><input aria-label="Score" type="text" name="score[]" class="sharif_input tiny2" value="{{ problem.score }}"/></td>
+			<td><input aria-label="Time Limit for C" type="text" name="c_time_limit[]" class="sharif_input tiny2" value="{{ problem.c_time_limit }}"/></td>
+			<td><input aria-label="Time Limit for Python" type="text" name="python_time_limit[]" class="sharif_input tiny2" value="{{ problem.python_time_limit }}"/></td>
+			<td><input aria-label="Time Limit for Java" type="text" name="java_time_limit[]" class="sharif_input tiny2" value="{{ problem.java_time_limit }}"/></td>
+			<td><input aria-label="Memory Limit" type="text" name="memory_limit[]" class="sharif_input tiny" value="{{ problem.memory_limit }}"/></td>
+			<td><input aria-label="Allowed Languages" type="text" name="languages[]" class="sharif_input short2" value="{{ problem.allowed_languages }}"/></td>
+			<td><input aria-label="Diff Command" type="text" name="diff_cmd[]" class="sharif_input tiny" value="{{ problem.diff_cmd }}"/></td>
+			<td><input aria-label="Diff Argument" type="text" name="diff_arg[]" class="sharif_input tiny" value="{{ problem.diff_arg }}"/></td>
+			<td><input aria-label="Upload Only" type="checkbox" name="is_upload_only[]" class="check" value="{{ problem.id }}" {{ problem.is_upload_only ? 'checked' }}/></td>
 			<td><i class="fa fa-times-circle fa-lg color1 delete_problem pointer"></i></td>
 		</tr>
 	{% endfor %}

@@ -5,7 +5,7 @@
  #}
 <div id="top_bar" class="color-{{ selected }}">
 	<div class="top_object shj_menu" id="user_top">
-		<a href="{{ site_url('profile') }}" id="profile_link"><i class="fa fa-user"></i></a>
+		<a href="{{ site_url('profile') }}" id="profile_link" aria-label="Profile"><i class="fa fa-user"></i></a>
 		<div class="top_menu user-menu">
 			<div class="gravatar"><img src="http://www.gravatar.com/avatar/{{ md5(user.email) }}?s=70&d=identicon" /></div>
 			<div class="name"><i class="fa fa-user"></i> {{ user.username }}</div>
@@ -41,7 +41,7 @@
 	</div>
 	<div id="shj_logo" class="top_left">
 		<a href="{{ site_url('/') }}">
-			<img src="{{ base_url('assets/images/logo_small.png') }}"/>
+			<img src="{{ base_url('assets/images/logo_small.png') }}" aria-label="Logo SharIF Judge"/>
 			<h1 class="shjlogo-text">SharIF <span>Judge</span></h1>
 		</a>
 	</div>
