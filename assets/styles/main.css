@@ -593,10 +593,10 @@ div#page_title > i + span {
 
 div#page_title > h1 {
 	margin-left: 8px;
-	display: inline !important;
-	font-size: 20px !important;
-	margin-block-start: 0em !important;
-	margin-block-end: 0em !important;
+	display: inline ;
+	font-size: 20px ;
+	margin-block-start: 0em ;
+	margin-block-end: 0em ;
 }
 
 span.title_menu_item {
